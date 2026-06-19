@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header class="header">
+    <div class="logo">🐔 MY CHICKEN ADMIN</div>
+
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+    <a href="products.html">
+        <button>Manage Products</button>
+    </a>
+</header>
+
+<div class="container">
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Orders</h3>
+            <h2 id="totalOrders">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Today's Revenue</h3>
+            <h2 id="revenue">₹0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Pending Orders</h3>
+            <h2 id="pendingOrders">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Delivered Orders</h3>
+            <h2 id="deliveredOrders">0</h2>
+        </div>
+
+    </div>
+
+     <div id="recentOrders"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+// if(localStorage.getItem("adminLoggedIn") !== "true"){
+//     window.location.href = "login.html";
+// }
+
+// function logout(){
+//     localStorage.removeItem("adminLoggedIn");
+//     window.location.href="login.html";
+// }
+   
+
+async function loadDashboard(){
+
+    try{
+
+        const response = await fetch(
+            'http://localhost:5000/admin/dashboard'
+        );
+
+        const data = await response.json();
+
+        document.getElementById(
+            'totalOrders'
+        ).innerText = data.totalOrders;
+
+        document.getElementById(
+            'pendingOrders'
+        ).innerText = data.pendingOrders;
+
+        document.getElementById(
+            'deliveredOrders'
+        ).innerText = data.deliveredOrders;
+
+        document.getElementById(
+            'revenue'
+        ).innerText = `₹${data.revenue}`;
+
+        const recentOrders =
+        document.getElementById('recentOrders');
+
+        recentOrders.innerHTML = "";
+
+        data.recentOrders.forEach(order => {
+
+            recentOrders.innerHTML += `
+
+            <div class="order">
+
+                <div>
+                    <strong>${order.customerName}</strong>
+                    <br>
+                    ${order.phone}
+                </div>
+
+                <div>
+                    ₹${order.total}
+                </div>
+
+                <div class="
+                    status
+                    ${order.status === 'Pending'
+                    ? 'pending'
+                    : 'delivered'}
+                ">
+                    ${order.status}
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+    }
+    catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+loadDashboard();
+
+</script>
+
+</script>
+</body>
+</html>

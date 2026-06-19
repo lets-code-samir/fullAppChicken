@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders Management</title>
+
+    <link rel="stylesheet" href="css/orders.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>🐔 Orders Management</h1>
+
+        <a href="dashboard.html">
+            <button class="back-btn">
+                Dashboard
+            </button>
+        </a>
+    </header>
+
+    <div class="container">
+
+        <div id="ordersContainer"></div>
+
+    </div>
+
+<script>
+
+ async function loadOrders(){
+
+    try{
+
+        const response =
+        await fetch("http://localhost:5000/orders");
+
+        const orders =
+        await response.json();
+
+        const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+        container.innerHTML = "";
+
+        orders.reverse().forEach(order=>{
+
+            container.innerHTML += `
+
+            <div class="order-card">
+
+                <div class="top">
+
+                    <h3>${order.customerName}</h3>
+
+                    <span class="
+                        status
+                        ${order.status === 'Pending'
+                        ? 'pending'
+                        : 'delivered'}
+                    ">
+                        ${order.status}
+                    </span>
+
+                </div>
+
+                <p><strong>Phone:</strong>
+                ${order.phone}</p>
+
+                <p><strong>Address:</strong>
+                ${order.address}</p>
+
+                <p><strong>Landmark:</strong>
+                ${order.landmark || '-'}</p>
+
+                <div class="items">
+
+                    <h4>Items Ordered</h4>
+
+                    ${
+                        order.items.map(item=>`
+                            <div class="item">
+                                ${item.name}
+                                × ${item.quantity}
+                            </div>
+                        `).join('')
+                    }
+
+                </div>
+
+                <h2 class="total">
+                    ₹${order.total}
+                </h2>
+
+                <div class="actions">
+
+                    <button
+                    class="deliver-btn"
+                    onclick="updateStatus('${order._id}')">
+
+                    Mark Delivered
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            `;
+        });
+
+    }
+    catch(err){
+        console.log(err);
+    }
+   }
+
+async function updateStatus(id, status) {
+    await fetch(`http://localhost:5000/orders/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status })
+    });
+
+    loadOrders();
+}
+
+ loadOrders();
+
+</script>
+
+</body>
+</html>

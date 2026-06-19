@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+
+    <div class="checkout-container">
+
+        <!-- Customer Details -->
+        <div class="customer-details">
+            <h2>Delivery Details</h2>
+
+            <form id="checkoutForm">
+
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+
+                <label>Phone Number</label>     
+                <input type="tel" id="phone" 
+                  placeholder="Enter phone number" 
+                  pattern="[0-9]{10}"
+                  minlength="10"  
+                  maxlength="10"
+                  required>
+
+                <label>Delivery Address</label>
+                <textarea id="address" rows="4" placeholder="Enter full delivery address" required></textarea>
+
+                <label>Landmark (Optional)</label>
+                <input type="text" id="landmark" placeholder="Nearby landmark">
+
+            </form>
+
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+
+            <h2>Order Summary</h2>
+
+            <div id="orderItems"></div>
+
+            <hr>
+
+            <div class="summary-row" >
+                <p>Subtotal</p>
+                <span id="subtotal"></span>
+            </div>
+
+            <hr>
+
+            <h3>Payment Method</h3>
+
+            <!-- <div class="payment-option">
+                <input type="radio" name="payment" checked>
+                <label>Cash on Delivery</label>
+            </div> -->
+
+            <p >currently cash on delivery on Available</p>
+
+            <button type="button" id="placeOrderBtn">
+                Place Order
+            </button>
+
+        </div>
+
+    </div>
+    <div id="successCard" class="success-card">
+          <img src="images/logo.png" class="success-logo">
+          <h2>🎉 Order Placed!</h2>
+          <p>Thank you for ordering from Chicken Jaigaon.</p>
+          <p class="phone">
+             📞 9735966928
+          </p>
+    </div>
+
+    <audio id="successSound">
+          <source src="sounds/success.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="checkout.js"></script>
+
+</body>
+</html>

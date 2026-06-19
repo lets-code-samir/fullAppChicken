@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f6f8;
+    padding:40px 20px;
+}
+
+.cart-container{
+    max-width:1100px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:40px;
+    color:#c62828;
+}
+
+.cart-item{
+    background:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:20px;
+    margin-bottom:20px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+}
+
+.cart-item img{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.empty-cart{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+.item-details{
+    flex:1;
+    margin-left:20px;
+}
+
+.item-details h3{
+    margin-bottom:8px;
+}
+
+.item-details p{
+    color:#666;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.quantity button{
+    width:35px;
+    height:35px;
+
+    border:none;
+
+    background:#c62828;
+    color:white;
+
+    border-radius:50%;
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.item-total{
+    font-size:1.2rem;
+    font-weight:700;
+    color:#2e7d32;
+}
+
+.summary{
+    display:none;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.summary h2{
+    margin-bottom:20px;
+}
+
+.checkout-btn{
+    background:#c62828;
+    color:white;
+
+    border:none;
+
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+    font-weight:600;
+}
+
+.checkout-btn:hover{
+    background:#8b1e1e;
+}
+
+@media(max-width:768px){
+
+    .cart-item{
+        flex-direction:column;
+        gap:20px;
+        text-align:center;
+    }
+
+    .item-details{
+        margin-left:0;
+    }
+
+}
