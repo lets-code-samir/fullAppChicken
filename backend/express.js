@@ -11,7 +11,8 @@ app.use(cors())
 
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
+.then(() => 
+console.log("Connected DB:", mongoose.connection.db.databaseName))
 .catch(err => console.log(err));
 
 const orderSchema= new mongoose.Schema({
@@ -155,36 +156,25 @@ app.patch('/orders/:id', async (req, res) => {
 });
 
 
-// this for regular updation of products
-const productSchema = new mongoose.Schema({
 
-    name:{
-        type:String,
-        required:true
-    },
 
-    price:{
-        type:Number,
-        required:true
-    },
 
-    description:String,
+// this request gets product from the database
 
-    image:String,
 
-    unit:{
-        type:String,
-        default:"kg"
-    }
-
+const productSchema = new mongoose.Schema({}, {
+    strict: false,          // Jo bhi fields collection me hain, sab allow
+    collection: "Products"  // Existing collection ka naam
 });
 
 const Product = mongoose.model("Product", productSchema);
+
 
 app.get('/products', async (req, res) => {
     try {
 
         const products = await Product.find();
+        console.log(products)
 
         res.json(products);
 
@@ -225,47 +215,6 @@ app.patch('/products/:id', async (req, res) => {
     }
 });
 
-// this will help admin to add new product
-
-app.post('/products', async (req, res) => {
-
-    try {
-
-        const product =
-            await Product.create(req.body);
-
-        res.status(201).json(product);
-
-    } catch (err) {
-
-        console.log(err);
-        res.status(500).send("Server Error");
-
-    }
-});
-
-// if admin wants to delete a product
-app.delete('/products/:id', async (req, res) => {
-
-    try {
-
-        await Product.findByIdAndDelete(
-            req.params.id
-        );
-
-        res.send("Product Deleted");
-
-    } catch (err) {
-
-        console.log(err);
-        res.status(500).send("Server Error");
-
-    }
-});
 
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT,()=>{
-    console.log('the server is running on port number 5000')
-})
+module.exports(app)
