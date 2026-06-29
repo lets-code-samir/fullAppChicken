@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
             try{
                 console.log('clicked')
-                let requestToServer= await fetch("https://full-app-chicken-backend.onrender.com/orders",{
+                let requestToServer= await fetch("https://full-app-chicken.onrender.com/orders",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
