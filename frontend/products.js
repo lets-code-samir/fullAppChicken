@@ -4,7 +4,7 @@
 async function loadProducts() {
 
     const response =
-        await fetch("http://localhost:5000/products");
+        await fetch("https://full-app-chicken-backend.onrender.com/products");
 
     const products =
         await response.json();
