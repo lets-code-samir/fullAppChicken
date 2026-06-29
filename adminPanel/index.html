@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chicken Admin Portal</title>
+     <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <!-- Replace with your logo -->
+        <img src="logo.png" alt="My Chicken Logo" class="brand-logo">
+
+        <h2>Admin Portal</h2>
+
+        <p class="subtitle">
+            Secure access to orders, inventory management, customer records,
+            and daily business operations.
+        </p>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Username"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+        <button onclick="login()">
+            Login
+        </button>
+
+        <p id="msg"></p>
+
+        <div class="footer">
+            My Chicken Management System
+        </div>
+
+    </div>
+
+    <script>
+
+        function login(){
+
+            const username =
+            document.getElementById("username").value;
+
+            const password =
+            document.getElementById("password").value;
+
+            if(
+                username === "admin" &&
+                password === "12345"
+            ){
+
+                localStorage.setItem(
+                    "adminLoggedIn",
+                    "true"
+                );
+
+                window.location.href =
+                "admin.html";
+
+            }
+            else{
+
+                document.getElementById("msg")
+                .innerText =
+                "Invalid username or password";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

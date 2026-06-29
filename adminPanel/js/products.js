@@ -1,7 +1,7 @@
 async function loadProducts() {
 
     const response =
-        await fetch("http://localhost:5000/products");
+        await fetch("https://fullappchicken.onrender.com/products");
 
     const products =
         await response.json();
@@ -49,7 +49,7 @@ async function updatePrice(id) {
 
     const response =
         await fetch(
-            `http://localhost:5000/products/${id}`,
+            `https://fullappchicken.onrender.com/products/${id}`,
             {
                 method: "PATCH",
 
