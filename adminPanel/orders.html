@@ -31,12 +31,7 @@
 
     try{
 
-        const response =
-<<<<<<< HEAD
-        await fetch("https://fullappchicken.onrender.com/orders");
-=======
-        await fetch("https:/fullappchicken.onrender.com/orders");
->>>>>>> e1d97115da274bf408de1d5b2a8efa4ffaf61f16
+        const response =await fetch("https://fullappchicken.onrender.com/orders");
 
         const orders =
         await response.json();
@@ -121,11 +116,7 @@
    }
 
 async function updateStatus(id, status) {
-<<<<<<< HEAD
     await fetch(`https://fullappchicken.onrender.com/orders/${id}`, {
-=======
-    await fetch(`https:/fullappchicken.onrender.com/orders/${id}`, {
->>>>>>> e1d97115da274bf408de1d5b2a8efa4ffaf61f16
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
