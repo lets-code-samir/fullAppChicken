@@ -13,56 +13,75 @@ body{
 /* HEADER */
 
 .header{
-    background:linear-gradient(
-        135deg,
-        #9f0505,
-        #6b0000
-    );
-
-    color:white;
-
-    padding:18px 25px;
-
     display:flex;
     justify-content:space-between;
     align-items:center;
-
-    position:sticky;
-    top:0;
-
-    z-index:100;
-
-    box-shadow:0 4px 20px rgba(0,0,0,.2);
+    padding:18px 40px;
+    background:#1b1b1b;
+    border-bottom:4px solid #ffb300;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
 
 .logo{
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:.5px;
+    color:#fff;
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:1px;
 }
 
+.nav-buttons{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.nav-btn,
 .logout-btn{
-    background:#f2a51a;
-    color:#222;
-
+    padding:12px 22px;
     border:none;
-
-    padding:12px 18px;
-
     border-radius:10px;
-
-    font-weight:700;
-
+    font-size:15px;
+    font-weight:600;
     cursor:pointer;
+    transition:.3s ease;
+}
 
-    transition:.3s;
+/* Update Button */
+.update-btn{
+    background:linear-gradient(135deg,#ffb300,#ff6f00);
+    color:#fff;
+    box-shadow:0 5px 15px rgba(255,179,0,.35);
+}
+
+.update-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(255,179,0,.5);
+}
+
+/* Orders Button */
+.orders-btn{
+    background:linear-gradient(135deg,#ff5722,#e53935);
+    color:#fff;
+    box-shadow:0 5px 15px rgba(229,57,53,.35);
+}
+
+.orders-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(229,57,53,.5);
+}
+
+/* Logout */
+.logout-btn{
+    background:#2c2c2c;
+    color:#fff;
+    border:2px solid #ff3d3d;
 }
 
 .logout-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    background:#ff3d3d;
+    color:#fff;
+    transform:translateY(-3px);
 }
-
 /* CONTAINER */
 
 .container{

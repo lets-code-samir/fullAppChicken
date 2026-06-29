@@ -1,3 +1,7 @@
+if(localStorage.getItem("adminLoggedIn") !== "true"){
+    window.location.href = "index.html";
+}
+
 async function loadProducts() {
 
     const response =

@@ -122,11 +122,40 @@
             font-weight:600;
         }
 
-        .footer{
-            margin-top:25px;
-            color:rgba(255,255,255,.8);
-            font-size:12px;
-        }
+.footer{
+    margin-top:25px;
+    color:rgba(255,255,255,.8);
+    font-size:12px;
+    }
+
+
+.password-box{
+    position: relative;
+    width: 100%;
+}
+
+.password-box input{
+    width: 100%;
+    padding: 12px 45px 12px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.toggle-password{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+}
+
+.toggle-password:hover{
+    opacity: 0.7;
+}
 
         @media(max-width:480px){
 

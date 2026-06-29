@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Chicken Admin Portal</title>
      <link rel="stylesheet" href="css/index.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
 
     <div class="login-box">
 
-        <!-- Replace with your logo -->
+       
         <img src="logo.png" alt="My Chicken Logo" class="brand-logo">
 
         <h2>Admin Portal</h2>
@@ -27,11 +28,15 @@
             placeholder="Username"
         >
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Password"
-        >
+        <div class="password-box">
+
+          <input
+             type="password"
+             id="password"
+             placeholder="Password"
+           >
+           <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i>
+        </div>
 
         <button onclick="login()">
             Login
@@ -78,6 +83,20 @@
             }
 
         }
+
+        // for password eye open and close
+        function togglePassword() {
+            const password = document.getElementById("password");
+            const eye = document.querySelector(".toggle-password");
+
+            if (password.type === "password") {
+               password.type = "text";
+               eye.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+               password.type = "password";
+               eye.classList.replace("fa-eye-slash", "fa-eye");
+            }
+}
 
     </script>
 

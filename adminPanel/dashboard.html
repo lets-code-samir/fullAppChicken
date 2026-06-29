@@ -10,13 +10,20 @@
     <header class="header">
     <div class="logo">🐔 MY CHICKEN ADMIN</div>
 
-    <button class="logout-btn" onclick="logout()">
-        Logout
-    </button>
-    <a href="products.html">
-        <button>Update Products Price</button>
-    </a>
-</header>
+    <div class="nav-buttons">
+        <a href="products.html">
+            <button class="nav-btn update-btn">💰 Update Prices</button>
+        </a>
+
+        <a href="orders.html">
+            <button class="nav-btn orders-btn">📦 View Orders</button>
+        </a>
+
+        <button class="logout-btn" onclick="logout()">
+            Logout
+        </button>
+    </div>
+    </header>
 
 <div class="container">
 
@@ -52,14 +59,14 @@
 
 <script>
 
-// if(localStorage.getItem("adminLoggedIn") !== "true"){
-//     window.location.href = "login.html";
-// }
+if(localStorage.getItem("adminLoggedIn") !== "true"){
+    window.location.href = "index.html";
+}
 
-// function logout(){
-//     localStorage.removeItem("adminLoggedIn");
-//     window.location.href="login.html";
-// }
+function logout(){
+    localStorage.removeItem("adminLoggedIn");
+    window.location.href="index.html";
+}
    
 
 async function loadDashboard(){
