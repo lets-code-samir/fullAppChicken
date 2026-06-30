@@ -4,7 +4,7 @@ const express=require('express')
 const mongoose = require("mongoose");
 const cors=require('cors')
 const app=express()
-
+const bcrypt=require('bcrypt')
 
 app.use(express.json())
 app.use(cors())
@@ -84,7 +84,60 @@ app.post('/orders', async (req, res) => {
     }
 });
 
+// schema for admin 
+const adminSchema =new mongoose.Schema({
+    email:String,
+    password:String,
+});
 
+// mongoose model for the admin its necessary
+
+const admin= mongoose.model("Admin",adminSchema);
+
+// this is the checkpoint for login of admin
+
+app.post('/login',async (req,res)=>{
+    const{email,password}=req.body
+
+    const admin= await Admin.findOne({email:email})
+
+    // this is the check point logic for Email
+     if(!admin){
+        return res.status(401).json({
+             message:"invalid Email"
+        })
+     }
+    
+     // this is the check point logic for password
+     
+     const isMatch= await bcrypt.compare(password,admin.password)
+     
+     if(!isMatch){
+        return res.status(401).json({
+            message:"Invalid Password"
+        });
+     }
+     
+     // creation of jwt token 
+     const Token= Jwt.sign({
+        id:admin.id,
+        email:admin.email
+     },
+      process.env.JWT_SECRET,
+     {
+       expiresIn:"30min"
+     }
+    
+    
+    )
+     res.json({
+        message:"login sucessful",
+        Token
+     })
+})
+
+
+// this is for the admin dashboard 
 app.get('/admin/dashboard', async (req, res) => {
 
     try {
