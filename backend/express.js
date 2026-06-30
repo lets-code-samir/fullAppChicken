@@ -92,7 +92,7 @@ const adminSchema =new mongoose.Schema({
 
 // mongoose model for the admin its necessary
 
-const admin= mongoose.model("Admin",adminSchema);
+const Admin= mongoose.model("Admin",adminSchema);
 
 // this is the checkpoint for login of admin
 
