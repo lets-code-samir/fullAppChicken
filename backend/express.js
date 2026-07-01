@@ -100,12 +100,18 @@ const adminSchema =new mongoose.Schema({
 const Admin= mongoose.model("Admin",adminSchema);
 
 // this is the checkpoint for login of admin
-  
+
+app.get('/login',async(req,res)=>{
+    const admin=Admin.find()
+    res.send(admin)
+})
+
 app.post('/login',async (req,res)=>{
     const{email,password}=req.body
 
     const admin= await Admin.findOne({email:email})
     
+    console.log(admin)
     // this is the check point logic for Email
      if(!admin){
         return res.status(401).json({
