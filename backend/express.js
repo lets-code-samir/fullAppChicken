@@ -118,20 +118,15 @@ app.post('/login',async (req,res)=>{
     
      // this is the check point logic for password
      
-    //  const isMatch= await bcrypt.compare(password,admin.password)
+     const isMatch= await bcrypt.compare(password,admin.password)
      
-    //  if(!isMatch){
-    //     return res.status(401).json({
-    //         message:"Invalid Password"
-    //     });
-    //  }
-
-    if (password!=admin.password){
+     if(!isMatch){
         return res.status(401).json({
-            message:"invalid Password"
-        })
-    }
-     
+            message:"Invalid Password"
+        });
+     }
+
+
      // creation of jwt token 
      const Token= jwt.sign({
         id:admin.id,
@@ -139,7 +134,7 @@ app.post('/login',async (req,res)=>{
      },
       process.env.JWT_SECRET,
      {
-       expiresIn:"30min"
+       expiresIn:"30m"
      }
     
     
