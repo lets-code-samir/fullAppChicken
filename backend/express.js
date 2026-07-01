@@ -7,6 +7,7 @@ const app=express()
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
+const tokenVerification=require("./middleware/jwtVerification")
 
 app.use(express.json())
 app.use(cors())
@@ -147,7 +148,7 @@ app.post('/login',async (req,res)=>{
 
 
 // this is for the admin dashboard 
-app.get('/admin/dashboard', async (req, res) => {
+app.get('/admin/dashboard',tokenVerification, async (req, res) => {
 
     try {
 
@@ -198,7 +199,7 @@ app.get('/orders', async (req,res) => {
     res.json(orders);
 });
 
-app.patch('/orders/:id', async (req, res) => {
+app.patch('/orders/:id',tokenVerification, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -249,7 +250,7 @@ app.get('/products', async (req, res) => {
 });
 
 // this code wil help admin to update the price
-app.patch('/products/:id', async (req, res) => {
+app.patch('/products/:id',tokenVerification, async (req, res) => {
 
     try {
         if(req.body.price <= 0){

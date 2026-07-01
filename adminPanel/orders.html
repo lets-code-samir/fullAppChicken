@@ -32,8 +32,18 @@
  async function loadOrders(){
 
     try{
+        const token=localStorage.getItem("token")
 
-        const response =await fetch("https://fullappchicken.onrender.com/orders");
+        const response =await fetch("https://fullappchicken.onrender.com/orders",{
+            method:"GET",
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        });
+        if(!response.ok){
+            console.log(" invalid user")
+            return
+        }
 
         const orders =
         await response.json();

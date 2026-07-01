@@ -24,8 +24,9 @@
 
         <input
             type="text"
-            id="username"
-            placeholder="Username"
+            id="email"
+            placeholder="Enter Email"
+            required
         >
 
         <div class="password-box">
@@ -34,6 +35,7 @@
              type="password"
              id="password"
              placeholder="Password"
+             required
            >
            <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i>
         </div>
@@ -52,35 +54,40 @@
 
     <script>
 
-        function login(){
+        async function login (){
 
-            const username =
-            document.getElementById("username").value;
+            const email =
+            document.getElementById("email").value;
 
             const password =
             document.getElementById("password").value;
 
-            if(
-                username === "pranayLimbu" &&
-                password === "myChickenApp"
-            ){
-
-                localStorage.setItem(
-                    "adminLoggedIn",
-                    "true"
-                );
-
-                window.location.href =
-                "dashboard.html";
-
+            if(password=="" || email==""){
+                alert ('Enter valid information ')
+                return 
             }
-            else{
 
-                document.getElementById("msg")
-                .innerText =
-                "Invalid username or password";
+            const requestForVerification= await fetch("https://fullappchicken.onrender.com/login",{
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify({
+                     email,
+                     password
+                })
+            })
+            
+            const response= await requestForVerification.json();
+            console.log(response);
 
-            }
+            if (requestForVerification.ok) {
+                alert("Login Successful");
+                localStorage.setItem("token", response.Token);
+                window.location.href = "dashboard.html";
+                password.value=""
+                email.value=""
+             } 
 
         }
 

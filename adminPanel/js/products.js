@@ -5,7 +5,17 @@ if(localStorage.getItem("adminLoggedIn") !== "true"){
 async function loadProducts() {
 
     const response =
-        await fetch("https://fullappchicken.onrender.com/products");
+        await fetch("https://fullappchicken.onrender.com/products",{
+            method:"GET",
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        });
+
+    if(!response){
+        console.log(" invalid user")
+        return
+    };
 
     const products =
         await response.json();
