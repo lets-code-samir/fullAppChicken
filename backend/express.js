@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const cors=require('cors')
 const app=express()
 const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
+
 
 app.use(express.json())
 app.use(cors())
@@ -131,7 +133,7 @@ app.post('/login',async (req,res)=>{
     }
      
      // creation of jwt token 
-     const Token= Jwt.sign({
+     const Token= jwt.sign({
         id:admin.id,
         email:admin.email
      },
