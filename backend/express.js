@@ -101,11 +101,6 @@ const Admin= mongoose.model("Admin",adminSchema);
 
 // this is the checkpoint for login of admin
 
-app.get('/login',async(req,res)=>{
-    const admin=Admin.find()
-    res.send(admin)
-})
-
 app.post('/login',async (req,res)=>{
     const{email,password}=req.body
 
@@ -121,13 +116,19 @@ app.post('/login',async (req,res)=>{
     
      // this is the check point logic for password
      
-     const isMatch= await bcrypt.compare(password,admin.password)
+    //  const isMatch= await bcrypt.compare(password,admin.password)
      
-     if(!isMatch){
+    //  if(!isMatch){
+    //     return res.status(401).json({
+    //         message:"Invalid Password"
+    //     });
+    //  }
+
+    if (password!=admin.password){
         return res.status(401).json({
-            message:"Invalid Password"
-        });
-     }
+            message:"invalid Password"
+        })
+    }
      
      // creation of jwt token 
      const Token= Jwt.sign({
