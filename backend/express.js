@@ -148,7 +148,7 @@ app.post('/login',async (req,res)=>{
 
 
 // this is for the admin dashboard 
-app.get('/admin/dashboard',tokenVerification, async (req, res) => {
+app.get('/dashboard',tokenVerification, async (req, res) => {
 
     try {
 
