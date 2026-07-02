@@ -1,6 +1,4 @@
-if(localStorage.getItem("adminLoggedIn") !== "true"){
-    window.location.href = "index.html";
-}
+
 
 async function loadProducts() {
 
@@ -12,7 +10,8 @@ async function loadProducts() {
             }
         });
 
-    if(!response){
+    if(!response.ok){
+        window.location.href="index.html"
         console.log(" invalid user")
         return
     };
@@ -82,3 +81,5 @@ async function updatePrice(id) {
         alert("Price Updated");
     }
 }
+
+module.exports=loadProducts
