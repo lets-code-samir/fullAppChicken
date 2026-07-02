@@ -1,7 +1,9 @@
+const token=localStorage.getItem("token")
+
 async function loadOrders(){
 
     try{
-        const token=localStorage.getItem("token")
+        
 
         const response =await fetch("https://fullappchicken.onrender.com/orders",{
             method:"GET",
@@ -16,7 +18,7 @@ async function loadOrders(){
         );
 
         if(!response.ok){
-            container.innerHTML= <p>" invalid user"</p>
+            container.innerHTML= "<p> invalid user</p>;"
             return
         }
 
@@ -79,9 +81,17 @@ async function loadOrders(){
 
                     <button
                     class="deliver-btn"
-                    onclick="updateStatus('${order._id}')">
+                    onclick="updateStatus('${order._id}','Delivered')">
 
                     Mark Delivered
+
+                    </button>
+
+                    <button
+                    class="deliver-btn-pending"
+                    onclick="updateStatus('${order._id}','Pending')">
+
+                    Pending
 
                     </button>
 
@@ -99,17 +109,25 @@ async function loadOrders(){
    }
 
 async function updateStatus(id, status) {
-    await fetch(`https://fullappchicken.onrender.com/orders/${id}`, {
+   const response= await fetch(`https://fullappchicken.onrender.com/orders/${id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+             Authorization:`Bearer ${token}`
         },
         body: JSON.stringify({ status })
     });
 
+    if(!response.ok){
+        alert("Failed to update order");
+        return;
+    }
+
     loadOrders();
+
 }
 
- loadOrders();
 
- module.exports=loadOrders;
+loadOrders();
+
+ 

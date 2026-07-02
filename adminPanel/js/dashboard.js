@@ -10,7 +10,8 @@ document.getElementById('logout-btn').addEventListener('click',()=>{
 async function loadDashboard(){
 
     try{
-
+        const token=localStorage.getItem('token')
+        
         const response = await fetch(
             'https:/fullappchicken.onrender.com/admin/dashboard',{
             method:"GET",

@@ -147,6 +147,23 @@ body{
     font-weight:700;
 }
 
+.deliver-btn-pending{
+
+    background:#c9ac29;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:700;
+}
+
 .deliver-btn:hover{
     opacity:.9;
 }
