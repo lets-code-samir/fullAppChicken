@@ -88,4 +88,3 @@ async function loadDashboard(){
 }
 
 loadDashboard();
-module.exports=loadDashboard

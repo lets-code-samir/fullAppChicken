@@ -82,4 +82,3 @@ async function updatePrice(id) {
     }
 }
 
-module.exports=loadProducts
