@@ -7,7 +7,11 @@ const app=express()
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
+<<<<<<< HEAD
 const tokenVerification=require("./middlewares/jwt.js")
+=======
+const tokenVerification=require("./middlewares/jwtVerification")
+>>>>>>> 18a405cdfa720d1ecd7a08186948e7ad5fd8161f
 
 app.use(express.json())
 app.use(cors())
