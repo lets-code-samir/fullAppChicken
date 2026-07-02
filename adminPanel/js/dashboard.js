@@ -13,15 +13,15 @@ async function loadDashboard(){
         const token=localStorage.getItem('token')
         
         const response = await fetch(
-            'https:/fullappchicken.onrender.com/admin/dashboard',{
+            'https://fullappchicken.onrender.com/dashboard',{
             method:"GET",
             headers:{
                 Authorization:`Bearer ${token}`
             }
         });
-
+        
         if(!response.ok){
-            window.location.href="index.html"
+            
             console.log('invalid user')
         }
 
