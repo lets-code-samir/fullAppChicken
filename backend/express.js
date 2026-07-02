@@ -7,7 +7,7 @@ const app=express()
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
-const tokenVerification=require("./middlewares/jwtVerification")
+const jwtVerification=require("./middlewares/jwt.js")
 
 app.use(express.json())
 app.use(cors())
@@ -148,7 +148,7 @@ app.post('/login',async (req,res)=>{
 
 
 // this is for the admin dashboard 
-app.get('/dashboard',tokenVerification, async (req, res) => {
+app.get('/dashboard',jwtVerification, async (req, res) => {
 
     try {
 
@@ -199,7 +199,7 @@ app.get('/orders', async (req,res) => {
     res.json(orders);
 });
 
-app.patch('/orders/:id',tokenVerification, async (req, res) => {
+app.patch('/orders/:id',jwtVerification, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -250,7 +250,7 @@ app.get('/products', async (req, res) => {
 });
 
 // this code wil help admin to update the price
-app.patch('/products/:id',tokenVerification, async (req, res) => {
+app.patch('/products/:id',jwtVerification, async (req, res) => {
 
     try {
         if(req.body.price <= 0){
@@ -288,3 +288,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
