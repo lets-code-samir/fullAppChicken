@@ -29,6 +29,17 @@ async function loadOrders(){
         container.innerHTML = "";
 
         orders.reverse().forEach(order=>{
+            
+            const dateTime = new Date(order.orderDate).toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+            });
 
             container.innerHTML += `
 
@@ -57,6 +68,9 @@ async function loadOrders(){
 
                 <p><strong>Landmark:</strong>
                 ${order.landmark || '-'}</p>
+
+                <p><strong>Date and Time:</strong>
+                ${dateTime}</p>
 
                 <div class="items">
 

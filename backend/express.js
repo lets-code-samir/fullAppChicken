@@ -10,8 +10,17 @@ const jwt=require('jsonwebtoken')
 const jwtVerification=require("./middlewares/jwt.js")
 
 app.use(express.json())
-app.use(cors())
 
+// only the mentioned url can send request 
+app.use(cors({
+    origin:[
+        "https://mychicken.netlify.app",
+        "https://adminmychicken.netlify.app"
+    ]
+}))
+
+// this is the transporter which sends email admin
+const sendOrderEmail = require("./utils/sendOrderEmail");
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => 
@@ -21,17 +30,22 @@ console.log("Connected DB:", mongoose.connection.db.databaseName))
 const orderSchema= new mongoose.Schema({
     customerName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength:2
     },
 
     phone: {
         type: String,
-        required: true
+        required: true,
+        match: /^\d{10}$/
     },
 
     address: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 5
     },
 
     landmark: {
@@ -48,7 +62,8 @@ const orderSchema= new mongoose.Schema({
 
     total: {
         type: Number,
-        required: true
+        required: true,
+        min: 1
     },
 
     status: {
@@ -69,15 +84,57 @@ const order=mongoose.model("orderData",orderSchema)
 app.post('/orders', async (req, res) => {
     try {
 
-        const orderData = req.body;
+        const { customerName, phone, address, total, items, landmark } = req.body;
 
-        if (!orderData.items || orderData.items.length === 0) {
-            return res.status(400).send("Cart is empty");
-        }
+        if (!customerName || customerName.trim() === "") {
+            return res.status(400).json({
+             message: "Customer name is required"
+           });
+          } 
 
-        await order.create(orderData);
+
+         if (!/^\d{10}$/.test(phone)) {
+           return res.status(400).json({
+           message: "Invalid phone number"
+           });
+         }
+         if (total <= 0) {
+           return res.status(400).json({
+             message: "Invalid total"
+          });
+         }
+         
+         if (!Array.isArray(items) || items.length === 0) {
+              return res.status(400).json({
+              message: "Cart is empty"
+              });
+           }
+
+         for (const item of items) {
+          if (
+              !item.name ||
+               item.price <= 0 ||
+               item.quantity <= 0
+               ) {
+               return res.status(400).json({
+                  message: "Invalid item"
+                });
+               } 
+           }
+
+        const newOrder=await order.create({
+           customerName,
+           phone,
+           address,
+           landmark,
+           items,
+           total
+        })
 
         res.status(201).send("Order placed");
+        sendOrderEmail(newOrder).catch(err => {
+              console.error("Email sending failed:", err);
+        })
 
     } catch(err) {
 
@@ -109,7 +166,6 @@ app.post('/login',async (req,res)=>{
 
     const admin= await Admin.findOne({email:email})
     
-    console.log(admin)
     // this is the check point logic for Email
      if(!admin){
         return res.status(401).json({
@@ -194,21 +250,39 @@ app.get('/dashboard',jwtVerification, async (req, res) => {
 
 });
 
-app.get('/orders', async (req,res) => {
-    const orders = await order.find().sort({ orderDate: -1 });
-    res.json(orders);
+// to view orders in admin panel 
+app.get('/orders', jwtVerification, async (req, res) => {
+    try {
+        const orders = await order.find().sort({ orderDate: -1 });
+        res.json(orders);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server Error");
+    }
 });
 
 app.patch('/orders/:id',jwtVerification, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
+        
+        if (!["Pending", "Delivered"].includes(status)) {
+            return res.status(400).json({
+             message: "Invalid status"
+          });
+        }
 
         const updatedOrder = await order.findByIdAndUpdate(
             id,
             {status},
             { new: true }
         );
+
+        if (!updatedOrder) {
+              return res.status(404).json({
+              message: "Order not found"
+        });
+}
 
         res.json(updatedOrder);
 
@@ -237,7 +311,10 @@ app.get('/products', async (req, res) => {
     try {
 
         const products = await Product.find();
-        console.log(products)
+
+        if (products.length === 0) {
+           return res.status(404).send("No products found");
+        }
 
         res.json(products);
 
