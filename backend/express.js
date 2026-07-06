@@ -13,11 +13,13 @@ app.use(express.json())
 
 // only the mentioned url can send request 
 app.use(cors({
-    origin:[
-        "https://mychicken.netlify.app",
-        "https://adminmychicken.netlify.app"
-    ]
-}))
+    origin: [
+        "https://adminofmychicken.netlify.app",
+        "https://mychicken.netlify.app"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 // this is the transporter which sends email admin
 const sendOrderEmail = require("./utils/sendOrderEmail");
